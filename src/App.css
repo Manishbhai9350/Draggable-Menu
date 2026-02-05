@@ -1,0 +1,117 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,body {
+  overflow: hidden;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #222;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+h1 {
+  opacity: 0.6;
+  font-size: 2.5rem;
+}
+
+p {
+  opacity: 0.4;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: white;
+  opacity: 0.4;
+  text-decoration: none;
+  text-transform: capitalize;
+  margin-top: 0.5rem;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.menu-container {
+  padding: 3px 0px;
+  padding-left: 18px;
+  padding-right: 3px;
+  border-radius: 50px;
+  background: rgba(158, 153, 153, 0.405);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+
+  .items {
+    display: flex;
+    margin-inline: 10px;
+    gap: 10px;
+    .item {
+      cursor: pointer;
+      padding-inline: 20px;
+      height: 45px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      background: white;
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  }
+
+  .toggle-button {
+    height: 50px;
+    aspect-ratio: 1;
+    background: rgba(158, 158, 158, 0.405);
+    color: white;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    padding-left: 3px;
+    line-height: .7rem;
+    position: relative;
+    .icon-menu {
+        opacity:0;
+    }
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  h1 {
+    color: white;
+    opacity: 1;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+  }
+}
+
+.dotted-container {
+  border: 1px dashed rgb(134, 134, 134);
+  border-radius: 50px;
+  opacity: 0;
+  position: absolute;
+  transition: .3s opacity ease;
+}
