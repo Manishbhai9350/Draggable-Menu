@@ -7,6 +7,7 @@ const Draggable = () => {
   const [open, setOpen] = useState(false);
   const container = useRef(null);
   const containerInitialRect = useRef();
+  const snappingRadius = 200;
   const distanceFromInitialPos = useRef(0);
   const dottedContainer = useRef(null);
   const itemsWidth = useRef(0);
@@ -29,7 +30,7 @@ const Draggable = () => {
       ease: "power2.inOut",
     });
     gsap.to(document.querySelector(".dotted-container"), {
-      width: containerInitialRect.current.width - itemsWidth.current
+      width: containerInitialRect.current.width - itemsWidth.current,
     });
     items.map((item, i) => {
       const tl = gsap.timeline();
@@ -62,6 +63,8 @@ const Draggable = () => {
     });
     gsap.to(document.querySelector(".dotted-container"), {
       width: containerInitialRect.current.width,
+      duration:1,
+      delay:.6
     });
     items.map((item, i) => {
       const tl = gsap.timeline();
@@ -90,35 +93,34 @@ const Draggable = () => {
           containerInitialRect.current.x + "px";
         dottedContainer.current.style.top =
           containerInitialRect.current.y + "px";
-        dottedContainer.current.style.height =
-          rect.height + "px";
+        dottedContainer.current.style.height = rect.height + "px";
 
-        const x = e.clientX - containerInitialRect.current.x;
-        const y = e.clientY - containerInitialRect.current.y;
-
+        const x = e.clientX || e?.touches?.[0]?.clientX - containerInitialRect.current.x;
+        const y = e.clientY || e?.touches?.[0]?.clientY - containerInitialRect.current.y;
         const distance = Math.sqrt(x * x + y * y);
+
         distanceFromInitialPos.current = distance;
 
-        if(distance < 170) {
-            dottedContainer.current.style.opacity = 1
+        if (distance < snappingRadius) {
+          dottedContainer.current.style.opacity = 1;
         } else {
-            dottedContainer.current.style.opacity = 0
+          dottedContainer.current.style.opacity = 0;
         }
-        
       },
-      onDragEnd(){
-        console.log(containerInitialRect.current.x, containerInitialRect.current.y)
-        gsap.to('.menu-container', {
-            left: containerInitialRect.current.x,
-            top: containerInitialRect.current.y,
+      onDragEnd() {
+        if (distanceFromInitialPos.current < snappingRadius) {
+          gsap.to(".menu-container", {
+            x: 0,
+            y: 0,
             duration: 0.5,
-            ease: "elastic.out(1, 0.5)"
-        })
-      }
+            ease: "elastic.out(1, 0.5)",
+          });
+        }
+      },
     });
 
     const containerRect = container.current.getBoundingClientRect();
-    containerInitialRect.current = containerRect
+    containerInitialRect.current = containerRect;
 
     openMenu();
 
